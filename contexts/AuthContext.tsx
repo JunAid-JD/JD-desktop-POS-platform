@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
         setUser(adminUser);
         localStorage.setItem('user', JSON.stringify(adminUser));
-      } else {
+        router.push('/admin/dashboard');
         // Mock regular user data
         const mockUser: User = {
           id: '1',
@@ -72,7 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           fbrEnabled: false,
         };
         setUser(mockUser);
-        localStorage.setItem('user', JSON.stringify(mockUser));
+        router.push('/admin/dashboard');
       }
       
     } catch (error) {
