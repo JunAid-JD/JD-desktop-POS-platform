@@ -16,7 +16,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navigation = [
-  { name: 'Dashboard', href: '/admin/dashboard', icon: Home },
+  { name: 'Dashboard', href: '/admin/admin-dashboard', icon: Home },
   { name: 'Subscriptions', href: '/admin/subscriptions', icon: CreditCard },
   { name: 'FBR Users', href: '/admin/fbr-users', icon: FileText },
   { name: 'User Management', href: '/admin/users', icon: Users },

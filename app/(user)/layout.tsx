@@ -18,7 +18,7 @@ export default function UserLayout({
     if (!loading && !user) {
       router.push('/login');
     } else if (!loading && user && user.role === 'admin') {
-      router.push('/admin/dashboard');
+      router.push('/admin/admin-dashboard');
     }
   }, [user, loading, router]);
 
