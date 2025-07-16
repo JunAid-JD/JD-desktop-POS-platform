@@ -20,6 +20,7 @@ const navigation = [
   { name: 'Inventory', href: '/inventory', icon: Package },
   { name: 'Reports', href: '/reports', icon: TrendingUp },
   { name: 'Customers', href: '/customers', icon: Users },
+  { name: 'Profile', href: '/profile', icon: Users },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
 

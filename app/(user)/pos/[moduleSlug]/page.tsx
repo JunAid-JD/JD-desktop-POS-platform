@@ -7,6 +7,7 @@ import { ClothingPOS } from '@/components/pos/ClothingPOS';
 import { ElectronicsPOS } from '@/components/pos/ElectronicsPOS';
 import { RestaurantPOS } from '@/components/pos/RestaurantPOS';
 import { StationeryPOS } from '@/components/pos/StationeryPOS';
+import { MobilePOS } from '@/components/pos/MobilePOS';
 
 export default function ModulePOSPage() {
   const { moduleSlug } = useParams();
@@ -25,6 +26,8 @@ export default function ModulePOSPage() {
         return <RestaurantPOS />;
       case 'stationery':
         return <StationeryPOS />;
+      case 'mobile':
+        return <MobilePOS />;
       default:
         return (
           <div className="text-center py-12">

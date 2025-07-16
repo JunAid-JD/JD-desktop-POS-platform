@@ -57,6 +57,14 @@ const posModules = [
     icon: '✏️',
     color: 'bg-indigo-50 border-indigo-200 text-indigo-700',
     features: ['Bulk packs', 'School supplies', 'Seasonal items', 'Student discounts']
+  },
+  {
+    id: 'mobile',
+    name: 'Mobile/Accessories',
+    description: 'IMEI tracking, warranty management, mobile accessories',
+    icon: '📱',
+    color: 'bg-pink-50 border-pink-200 text-pink-700',
+    features: ['IMEI tracking', 'Warranty logs', 'Accessories', 'Mobile repairs']
   }
 ];
 
