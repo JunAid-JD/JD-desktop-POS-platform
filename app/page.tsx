@@ -116,7 +116,7 @@ export default function LandingPage() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button size="lg" asChild>
-            <Link href="/register">Start Free Trial</Link>
+            <Link href="/register">Get Started</Link>
           </Button>
         </div>
       </section>

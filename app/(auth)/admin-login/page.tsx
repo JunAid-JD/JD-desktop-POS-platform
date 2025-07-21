@@ -27,11 +27,11 @@ export default function AdminLoginPage() {
 
     try {
       // For demo purposes, check for admin credentials
-      if (email === 'admin@jddesktop.com' && password === 'admin123') {
+      if (email === 'admin@gmail.com' && password === 'admin123') {
         // Mock admin user
         const adminUser = {
           id: 'admin1',
-          email: 'admin@jddesktop.com',
+          email: 'admin@gmail.com',
           businessName: 'JD Desktop Admin',
           ownerName: 'Admin User',
           phone: '+1234567890',
@@ -40,11 +40,11 @@ export default function AdminLoginPage() {
           subscriptionStatus: 'active' as const,
           fbrEnabled: true,
         };
-        
+
         // Store admin user in localStorage (your backend will handle this properly)
         localStorage.setItem('user', JSON.stringify(adminUser));
-        
-        router.push('/admin/dashboard');
+
+        router.push('/admin-dashboard');
       } else {
         setError('Invalid admin credentials. Please try again.');
       }
@@ -56,81 +56,81 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center">
-              <Shield className="text-white h-6 w-6" />
+    <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 p-4'>
+      <Card className='w-full max-w-md'>
+        <CardHeader className='text-center'>
+          <div className='flex justify-center mb-4'>
+            <div className='w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center'>
+              <Shield className='text-white h-6 w-6' />
             </div>
           </div>
-          <CardTitle className="text-2xl">Admin Login</CardTitle>
-          <CardDescription>
-            Access the admin dashboard
-          </CardDescription>
+          <CardTitle className='text-2xl'>Admin Login</CardTitle>
+          <CardDescription>Access the admin dashboard</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className='space-y-4'>
             {error && (
-              <Alert variant="destructive">
+              <Alert variant='destructive'>
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            
-            <div className="space-y-2">
-              <Label htmlFor="email">Admin Email</Label>
+
+            <div className='space-y-2'>
+              <Label htmlFor='email'>Admin Email</Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="Enter admin email"
+                id='email'
+                type='email'
+                placeholder='Enter admin email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
+
+            <div className='space-y-2'>
+              <Label htmlFor='password'>Password</Label>
+              <div className='relative'>
                 <Input
-                  id="password"
+                  id='password'
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Enter admin password"
+                  placeholder='Enter admin password'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
                 <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  type='button'
+                  variant='ghost'
+                  size='sm'
+                  className='absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent'
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? <EyeOff className='h-4 w-4' /> : <Eye className='h-4 w-4' />}
                 </Button>
               </div>
             </div>
-            
-            <Button type="submit" className="w-full" disabled={loading}>
+
+            <Button type='submit' className='w-full' disabled={loading}>
               {loading ? 'Signing in...' : 'Admin Sign In'}
             </Button>
           </form>
-          
-          <div className="mt-6 text-center">
-            <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-              <p className="text-sm text-yellow-800">
-                <strong>Demo Credentials:</strong><br />
-                Email: admin@jddesktop.com<br />
+
+          <div className='mt-6 text-center'>
+            <div className='p-3 bg-yellow-50 border border-yellow-200 rounded-lg'>
+              <p className='text-sm text-yellow-800'>
+                <strong>Demo Credentials:</strong>
+                <br />
+                Email: admin@gmail.com
+                <br />
                 Password: admin123
               </p>
             </div>
           </div>
-          
-          <div className="mt-4 text-center">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/">
-                <ArrowLeft className="mr-2 h-4 w-4" />
+
+          <div className='mt-4 text-center'>
+            <Button variant='ghost' size='sm' asChild>
+              <Link href='/'>
+                <ArrowLeft className='mr-2 h-4 w-4' />
                 Back to Home
               </Link>
             </Button>

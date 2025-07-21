@@ -41,10 +41,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(true);
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // Check if it's admin login
-      if (email === 'admin@jddesktop.com' && password === 'admin123') {
+      if (email === 'admin@gmail.com' && password === 'admin123') {
         const adminUser: User = {
           id: 'admin1',
           email,
@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
         setUser(adminUser);
         localStorage.setItem('user', JSON.stringify(adminUser));
-        router.push('/admin/dashboard');
+        router.push('/admin-dashboard');
         // Mock regular user data
         const mockUser: User = {
           id: '1',
@@ -72,9 +72,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           fbrEnabled: false,
         };
         setUser(mockUser);
-        router.push('/admin/dashboard');
+        router.push('/admin-dashboard');
       }
-      
     } catch (error) {
       throw new Error('Login failed');
     } finally {
@@ -86,8 +85,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(true);
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       const mockUser: User = {
         id: '1',
         email: userData.email,
@@ -99,7 +98,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         subscriptionStatus: 'pending',
         fbrEnabled: false,
       };
-      
+
       setUser(mockUser);
       localStorage.setItem('user', JSON.stringify(mockUser));
     } catch (error) {
@@ -121,11 +120,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, loading, login, register, logout }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
