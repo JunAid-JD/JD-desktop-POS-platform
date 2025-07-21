@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
         // Store admin user in localStorage (your backend will handle this properly)
         localStorage.setItem('user', JSON.stringify(adminUser));
 
-        router.push('/admin-dashboard');
+        router.push('/admin/dashboard');
       } else {
         setError('Invalid admin credentials. Please try again.');
       }

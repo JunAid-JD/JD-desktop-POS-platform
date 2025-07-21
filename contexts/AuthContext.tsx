@@ -58,8 +58,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
         setUser(adminUser);
         localStorage.setItem('user', JSON.stringify(adminUser));
-        router.push('/admin-dashboard');
-        // Mock regular user data
+      } else {
+        // Mock regular user data for any other email/password
         const mockUser: User = {
           id: '1',
           email,
@@ -72,7 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           fbrEnabled: false,
         };
         setUser(mockUser);
-        router.push('/admin-dashboard');
+        localStorage.setItem('user', JSON.stringify(mockUser));
       }
     } catch (error) {
       throw new Error('Login failed');
