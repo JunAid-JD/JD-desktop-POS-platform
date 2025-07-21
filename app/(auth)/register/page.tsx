@@ -72,17 +72,28 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 p-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center nexus-bg p-4">
+      <div className="nexus-circles">
+        <div className="nexus-circle"></div>
+        <div className="nexus-circle"></div>
+        <div className="nexus-circle"></div>
+      </div>
+      
+      <div className="absolute top-8 left-8 z-10">
+        <h1 className="text-4xl font-bold text-white">
+          WELCOME TO<br />
+          <span className="text-5xl">NEXUS<br />DESKTOP</span>
+        </h1>
+      </div>
+      
+      <Card className="w-full max-w-md glass-card border-0 relative z-10">
         <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">JD</span>
-            </div>
-          </div>
-          <CardTitle className="text-2xl">Create Account</CardTitle>
+          <CardTitle className="text-2xl text-white">
+            SIGN UP
+            <div className="w-12 h-1 bg-green-400 mx-auto mt-2"></div>
+          </CardTitle>
           <CardDescription>
-            Start your POS journey today
+            <span className="text-white/80">Start your POS journey today</span>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -96,6 +107,7 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <Label htmlFor="businessName">Business Name</Label>
               <Input
+                className="glass-input border-white/20 text-white placeholder:text-white/70"
                 id="businessName"
                 placeholder="Enter your business name"
                 value={formData.businessName}
@@ -107,6 +119,7 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <Label htmlFor="ownerName">Owner Name</Label>
               <Input
+                className="glass-input border-white/20 text-white placeholder:text-white/70"
                 id="ownerName"
                 placeholder="Enter owner's name"
                 value={formData.ownerName}
@@ -118,6 +131,7 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
+                className="glass-input border-white/20 text-white placeholder:text-white/70"
                 id="email"
                 type="email"
                 placeholder="Enter your email"
@@ -130,6 +144,7 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <Label htmlFor="phone">Phone Number</Label>
               <Input
+                className="glass-input border-white/20 text-white placeholder:text-white/70"
                 id="phone"
                 type="tel"
                 placeholder="Enter your phone number"
@@ -142,7 +157,7 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <Label htmlFor="businessType">Business Type</Label>
               <Select value={formData.businessType} onValueChange={(value) => handleInputChange('businessType', value)}>
-                <SelectTrigger>
+                <SelectTrigger className="glass-input border-white/20 text-white">
                   <SelectValue placeholder="Select your business type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -159,6 +174,7 @@ export default function RegisterPage() {
               <Label htmlFor="password">Password</Label>
               <div className="relative">
                 <Input
+                  className="glass-input border-white/20 text-white placeholder:text-white/70"
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Create a password"
@@ -168,9 +184,9 @@ export default function RegisterPage() {
                 />
                 <Button
                   type="button"
-                  variant="ghost"
+                  variant="ghost" 
                   size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-white/10 text-white"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -182,6 +198,7 @@ export default function RegisterPage() {
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <div className="relative">
                 <Input
+                  className="glass-input border-white/20 text-white placeholder:text-white/70"
                   id="confirmPassword"
                   type={showConfirmPassword ? 'text' : 'password'}
                   placeholder="Confirm your password"
@@ -191,9 +208,9 @@ export default function RegisterPage() {
                 />
                 <Button
                   type="button"
-                  variant="ghost"
+                  variant="ghost" 
                   size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-white/10 text-white"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
                   {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -204,33 +221,34 @@ export default function RegisterPage() {
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="terms"
+                className="border-white/20 data-[state=checked]:bg-green-500"
                 checked={formData.acceptTerms}
                 onCheckedChange={(checked) => handleInputChange('acceptTerms', checked === true)}
               />
-              <label htmlFor="terms" className="text-sm">
+              <label htmlFor="terms" className="text-sm text-white">
                 I accept the{' '}
-                <Link href="#" className="text-blue-600 hover:underline">
+                <Link href="#" className="text-green-300 hover:underline">
                   Terms and Conditions
                 </Link>
               </label>
             </div>
             
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3" disabled={loading}>
               {loading ? 'Creating Account...' : 'Create Account'}
             </Button>
           </form>
           
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-white/80">
               Already have an account?{' '}
-              <Link href="/login" className="text-blue-600 hover:underline">
+              <Link href="/login" className="text-green-300 hover:underline font-semibold">
                 Sign in
               </Link>
             </p>
           </div>
           
           <div className="mt-4 text-center">
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" size="sm" className="text-white hover:bg-white/10" asChild>
               <Link href="/">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Home

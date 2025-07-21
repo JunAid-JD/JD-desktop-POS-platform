@@ -28,8 +28,12 @@ export function UserSidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 pt-16">
+    <div className="fixed inset-y-0 left-0 z-40 w-64 nexus-sidebar pt-16">
       <div className="p-4">
+        <div className="mb-6">
+          <h2 className="text-lg font-bold text-white">NEXUS DESKTOP</h2>
+          <p className="text-sm text-white/70 mt-1">MAIN</p>
+        </div>
         <nav className="space-y-2">
           {navigation.map((item) => {
             const isActive = pathname === item.href || 
@@ -40,8 +44,8 @@ export function UserSidebar() {
                 <Button
                   variant="ghost"
                   className={cn(
-                    'w-full justify-start',
-                    isActive && 'bg-blue-50 text-blue-600 hover:bg-blue-50'
+                    'w-full justify-start text-white hover:bg-white/10',
+                    isActive && 'bg-white/20 text-white hover:bg-white/20'
                   )}
                 >
                   <item.icon className="mr-2 h-4 w-4" />

@@ -62,15 +62,12 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b bg-white/90 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold">JD</span>
-            </div>
-            <span className="text-xl font-bold">Desktop</span>
+            <span className="text-xl font-bold text-green-600">NEXUS DESKTOP</span>
           </div>
           <nav className="hidden md:flex space-x-6">
             <Link href="#features" className="text-gray-600 hover:text-blue-600 transition-colors">
@@ -90,11 +87,11 @@ export default function LandingPage() {
             <Button variant="outline" asChild>
               <Link href="/login">Login</Link>
             </Button>
-            <Button asChild>
+            <Button className="bg-green-500 hover:bg-green-600" asChild>
               <Link href="/register">Get Started</Link>
             </Button>
             <Button variant="ghost" size="sm" asChild>
-              <Link href="/admin-login" className="text-gray-600 hover:text-blue-600">
+              <Link href="/admin-login" className="text-gray-600 hover:text-green-600">
                 Admin
               </Link>
             </Button>
@@ -104,10 +101,10 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 text-center">
-        <Badge className="mb-6 bg-blue-100 text-blue-700 hover:bg-blue-200">
+        <Badge className="mb-6 bg-green-100 text-green-700 hover:bg-green-200">
           ✨ Now with Offline Support & FBR Integration
         </Badge>
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">
           Modular POS for Every Business
         </h1>
         <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -115,7 +112,7 @@ export default function LandingPage() {
           syncs online, and grows with your business needs.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" asChild>
+          <Button size="lg" className="bg-green-500 hover:bg-green-600" asChild>
             <Link href="/register">Get Started</Link>
           </Button>
         </div>

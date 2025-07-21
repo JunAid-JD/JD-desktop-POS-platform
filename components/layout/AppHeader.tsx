@@ -19,15 +19,12 @@ export function AppHeader() {
   const { user, logout } = useAuth();
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header className="nexus-header sticky top-0 z-50">
       <div className="px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">JD</span>
-              </div>
-              <span className="text-xl font-bold">Desktop</span>
+              <span className="text-xl font-bold text-green-600">NEXUS DESKTOP</span>
             </div>
             <Badge variant="outline" className="bg-green-50 text-green-700">
               {user?.subscriptionStatus === 'active' ? 'Active' : 'Pending'}
@@ -42,7 +39,7 @@ export function AppHeader() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
+                  <Avatar className="h-8 w-8 bg-green-500">
                     <AvatarFallback>
                       {user?.ownerName?.charAt(0) || 'U'}
                     </AvatarFallback>
