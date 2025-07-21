@@ -26,30 +26,9 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
-      // For demo purposes, check for admin credentials
-      if (email === 'admin@gmail.com' && password === 'admin123') {
-        // Mock admin user
-        const adminUser = {
-          id: 'admin1',
-          email: 'admin@gmail.com',
-          businessName: 'JD Desktop Admin',
-          ownerName: 'Admin User',
-          phone: '+1234567890',
-          businessType: 'admin',
-          role: 'admin' as const,
-          subscriptionStatus: 'active' as const,
-          fbrEnabled: true,
-        };
-
-        // Store admin user in localStorage (your backend will handle this properly)
-        localStorage.setItem('user', JSON.stringify(adminUser));
-
-        router.push('/admin/dashboard');
-      } else {
-        setError('Invalid admin credentials. Please try again.');
-      }
+      await login(email, password);
     } catch (err) {
-      setError('Login failed. Please try again.');
+      setError('Invalid admin credentials. Please try again.');
     } finally {
       setLoading(false);
     }

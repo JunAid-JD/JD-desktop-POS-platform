@@ -27,7 +27,6 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      // Router push will be handled by the layout based on user role
     } catch (err) {
       setError('Invalid credentials. Please try again.');
     } finally {
