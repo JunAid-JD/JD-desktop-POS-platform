@@ -6,33 +6,17 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
-const businessTypes = [
-  { value: 'pharmacy', label: 'Pharmacy / Medical Store' },
-  { value: 'grocery', label: 'Grocery Store' },
-  { value: 'clothing', label: 'Clothing / Garments' },
-  { value: 'electronics', label: 'Electronics / Mobile Shop' },
-  { value: 'stationery', label: 'Stationery Store' },
-  { value: 'restaurant', label: 'Restaurant / Takeaway' },
-  { value: 'appliances', label: 'Electronics / Appliances' },
-];
-
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    businessName: '',
-    ownerName: '',
+    name: '',
     email: '',
-    phone: '',
-    businessType: '',
     password: '',
     confirmPassword: '',
-    acceptTerms: false,
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -50,16 +34,11 @@ export default function RegisterPage() {
       return;
     }
 
-    if (!formData.acceptTerms) {
-      setError('Please accept the terms and conditions');
-      return;
-    }
-
     setLoading(true);
 
     try {
       await register(formData);
-      router.push('/dashboard');
+      router.push('/onboarding');
     } catch (err) {
       setError('Registration failed. Please try again.');
     } finally {
@@ -105,31 +84,19 @@ export default function RegisterPage() {
             )}
             
             <div className="space-y-2">
-              <Label htmlFor="businessName">Business Name</Label>
+              <Label htmlFor="name" className="text-white">Full Name</Label>
               <Input
                 className="glass-input border-white/20 text-white placeholder:text-white/70"
-                id="businessName"
-                placeholder="Enter your business name"
-                value={formData.businessName}
-                onChange={(e) => handleInputChange('businessName', e.target.value)}
+                id="name"
+                placeholder="Enter your full name"
+                value={formData.name}
+                onChange={(e) => handleInputChange('name', e.target.value)}
                 required
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="ownerName">Owner Name</Label>
-              <Input
-                className="glass-input border-white/20 text-white placeholder:text-white/70"
-                id="ownerName"
-                placeholder="Enter owner's name"
-                value={formData.ownerName}
-                onChange={(e) => handleInputChange('ownerName', e.target.value)}
-                required
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-white">Email</Label>
               <Input
                 className="glass-input border-white/20 text-white placeholder:text-white/70"
                 id="email"
@@ -142,36 +109,7 @@ export default function RegisterPage() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input
-                className="glass-input border-white/20 text-white placeholder:text-white/70"
-                id="phone"
-                type="tel"
-                placeholder="Enter your phone number"
-                value={formData.phone}
-                onChange={(e) => handleInputChange('phone', e.target.value)}
-                required
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="businessType">Business Type</Label>
-              <Select value={formData.businessType} onValueChange={(value) => handleInputChange('businessType', value)}>
-                <SelectTrigger className="glass-input border-white/20 text-white">
-                  <SelectValue placeholder="Select your business type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {businessTypes.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-white">Password</Label>
               <div className="relative">
                 <Input
                   className="glass-input border-white/20 text-white placeholder:text-white/70"
@@ -195,7 +133,7 @@ export default function RegisterPage() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword" className="text-white">Confirm Password</Label>
               <div className="relative">
                 <Input
                   className="glass-input border-white/20 text-white placeholder:text-white/70"
@@ -216,21 +154,6 @@ export default function RegisterPage() {
                   {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </Button>
               </div>
-            </div>
-            
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="terms"
-                className="border-white/20 data-[state=checked]:bg-green-500"
-                checked={formData.acceptTerms}
-                onCheckedChange={(checked) => handleInputChange('acceptTerms', checked === true)}
-              />
-              <label htmlFor="terms" className="text-sm text-white">
-                I accept the{' '}
-                <Link href="#" className="text-green-300 hover:underline">
-                  Terms and Conditions
-                </Link>
-              </label>
             </div>
             
             <Button type="submit" className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3" disabled={loading}>

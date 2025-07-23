@@ -100,11 +100,15 @@ export function GroceryPOS() {
   const [groceryItems, setGroceryItems] = useState<GroceryItem[]>(mockGroceryItems);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [weightInput, setWeightInput] = useState<{ [key: string]: string }>({});
 
+  const categories = ['all', ...Array.from(new Set(groceryItems.map(item => item.category)))];
+
   const filteredItems = groceryItems.filter(item =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.category.toLowerCase().includes(searchTerm.toLowerCase())
+    (item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     item.category.toLowerCase().includes(searchTerm.toLowerCase())) &&
+    (selectedCategory === 'all' || item.category === selectedCategory)
   );
 
   const addToCart = (item: GroceryItem, weight?: number) => {
@@ -188,205 +192,243 @@ export function GroceryPOS() {
   };
 
   return (
-    <div className="h-screen bg-gray-50 p-4">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-full">
-        {/* Left Panel - Items */}
-        <div className="lg:col-span-2 space-y-4">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center">
-                  <Package className="mr-2 h-5 w-5" />
-                  Grocery Store POS
-                </CardTitle>
-                <div className="flex space-x-2">
-                  <Button variant="outline" size="sm">
-                    <Barcode className="mr-2 h-4 w-4" />
-                    Scan
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    <Scale className="mr-2 h-4 w-4" />
-                    Weigh
-                  </Button>
-                </div>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100 p-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="bg-white rounded-lg shadow-sm border border-green-200 p-6 mb-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+                <Package className="h-6 w-6 text-white" />
               </div>
-            </CardHeader>
-          </Card>
-
-          <Card className="flex-1">
-            <CardContent className="p-4">
-              <div className="relative mb-4">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                <Input
-                  placeholder="Search items by name or category..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
+              <div>
+                <h1 className="text-2xl font-bold text-green-800">Grocery Store POS</h1>
+                <p className="text-green-600">Fresh Products & Daily Essentials</p>
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto">
-                {filteredItems.map((item) => (
-                  <div
-                    key={item.id}
-                    className="p-4 bg-white border rounded-lg hover:shadow-md transition-shadow"
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center space-x-2">
-                        <h3 className="font-semibold">{item.name}</h3>
-                        <Badge variant="outline" className="text-xs">
-                          {item.category}
-                        </Badge>
-                      </div>
-                      <Badge variant={item.stock <= 10 ? 'destructive' : 'default'} className="text-xs">
-                        {item.stock} {item.unit}
-                      </Badge>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="font-bold text-lg">
-                          ${item.isWeightBased ? item.pricePerKg : item.price}
-                          {item.isWeightBased && <span className="text-sm font-normal">/kg</span>}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          Unit: {item.unit}
-                        </div>
-                      </div>
-                      
-                      <div className="flex flex-col space-y-2">
-                        {item.isWeightBased ? (
-                          <div className="flex items-center space-x-2">
-                            <Input
-                              type="number"
-                              step="0.1"
-                              placeholder="Weight (kg)"
-                              value={weightInput[item.id] || ''}
-                              onChange={(e) => handleWeightChange(item.id, e.target.value)}
-                              className="w-20 text-sm"
-                            />
-                            <Button
-                              size="sm"
-                              onClick={() => {
-                                const weight = parseFloat(weightInput[item.id] || '0');
-                                if (weight > 0) {
-                                  addToCart(item, weight);
-                                }
-                              }}
-                            >
-                              <Plus className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        ) : (
-                          <Button
-                            size="sm"
-                            onClick={() => addToCart(item)}
-                            className="w-full"
-                          >
-                            <Plus className="mr-2 h-4 w-4" />
-                            Add
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+            <div className="flex space-x-3">
+              <Button variant="outline" className="border-green-200 text-green-700 hover:bg-green-50">
+                <Barcode className="mr-2 h-4 w-4" />
+                Scan
+              </Button>
+              <Button variant="outline" className="border-green-200 text-green-700 hover:bg-green-50">
+                <Scale className="mr-2 h-4 w-4" />
+                Weigh
+              </Button>
+              <Button className="bg-green-500 hover:bg-green-600 text-white">
+                <Plus className="mr-2 h-4 w-4" />
+                Add Item
+              </Button>
+            </div>
+          </div>
         </div>
 
-        {/* Right Panel - Cart */}
-        <div className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <ShoppingCart className="mr-2 h-5 w-5" />
-                Shopping Cart ({cart.length})
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 max-h-64 overflow-y-auto">
-                {cart.length === 0 ? (
-                  <p className="text-gray-500 text-center py-8">Cart is empty</p>
-                ) : (
-                  cart.map((item) => (
-                    <div key={item.id} className="p-2 bg-gray-50 rounded-lg">
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <h4 className="font-medium text-sm">{item.name}</h4>
-                          <p className="text-xs text-gray-600">{item.category}</p>
-                          <p className="text-xs text-gray-500">
-                            {item.isWeightBased 
-                              ? `${item.weight?.toFixed(1)} kg`
-                              : `${item.quantity} ${item.unit}`
-                            }
-                          </p>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Products Section */}
+          <div className="lg:col-span-2">
+            <Card className="border-green-200">
+              <CardHeader className="bg-green-50 border-b border-green-200">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-green-800">Product Inventory</CardTitle>
+                  <Badge className="bg-green-100 text-green-800">
+                    {filteredItems.length} items
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="p-6">
+                {/* Search and Filters */}
+                <div className="flex space-x-4 mb-6">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Input
+                      placeholder="Search items by name or category..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10 border-green-200 focus:border-green-400"
+                    />
+                  </div>
+                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                    <SelectTrigger className="w-48 border-green-200">
+                      <SelectValue placeholder="Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map(category => (
+                        <SelectItem key={category} value={category}>
+                          {category === 'all' ? 'All Categories' : category}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Items Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto">
+                  {filteredItems.map((item) => (
+                    <div
+                      key={item.id}
+                      className="p-4 border border-green-200 rounded-lg hover:shadow-md transition-shadow bg-white"
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center space-x-2">
+                          <h3 className="font-semibold text-green-800">{item.name}</h3>
+                          <Badge variant="outline" className="text-xs">
+                            {item.category}
+                          </Badge>
                         </div>
-                        <div className="text-right">
-                          <div className="font-semibold">${item.total.toFixed(2)}</div>
-                          <div className="flex items-center space-x-1 mt-1">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => updateQuantity(item.id, item.quantity - (item.isWeightBased ? 0.1 : 1))}
-                              className="h-6 w-6 p-0"
-                            >
-                              <Minus className="h-3 w-3" />
-                            </Button>
-                            <span className="text-xs px-2">
-                              {item.isWeightBased ? item.weight?.toFixed(1) : item.quantity}
-                            </span>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => updateQuantity(item.id, item.quantity + (item.isWeightBased ? 0.1 : 1))}
-                              className="h-6 w-6 p-0"
-                            >
-                              <Plus className="h-3 w-3" />
-                            </Button>
+                        <Badge variant={item.stock <= 10 ? 'destructive' : 'default'} className="text-xs">
+                          {item.stock} {item.unit}
+                        </Badge>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="font-bold text-lg text-green-600">
+                            ${item.isWeightBased ? item.pricePerKg : item.price}
+                            {item.isWeightBased && <span className="text-sm font-normal">/kg</span>}
                           </div>
+                          <div className="text-sm text-gray-600">
+                            Unit: {item.unit}
+                          </div>
+                        </div>
+                        
+                        <div className="flex flex-col space-y-2">
+                          {item.isWeightBased ? (
+                            <div className="flex items-center space-x-2">
+                              <Input
+                                type="number"
+                                step="0.1"
+                                placeholder="Weight (kg)"
+                                value={weightInput[item.id] || ''}
+                                onChange={(e) => handleWeightChange(item.id, e.target.value)}
+                                className="w-20 text-sm border-green-200"
+                              />
+                              <Button
+                                size="sm"
+                                className="bg-green-500 hover:bg-green-600"
+                                onClick={() => {
+                                  const weight = parseFloat(weightInput[item.id] || '0');
+                                  if (weight > 0) {
+                                    addToCart(item, weight);
+                                  }
+                                }}
+                              >
+                                <Plus className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ) : (
+                            <Button
+                              size="sm"
+                              onClick={() => addToCart(item)}
+                              className="w-full bg-green-500 hover:bg-green-600"
+                            >
+                              <Plus className="mr-2 h-4 w-4" />
+                              Add
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </div>
-                  ))
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          {cart.length > 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Bill Summary</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>Total Items:</span>
-                    <span>{cart.length}</span>
-                  </div>
-                  <div className="border-t pt-2">
-                    <div className="flex justify-between font-bold text-lg">
-                      <span>Total:</span>
-                      <span>${getTotalAmount().toFixed(2)}</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="mt-4 space-y-2">
-                  <Button className="w-full" onClick={handleCheckout}>
-                    <ShoppingCart className="mr-2 h-4 w-4" />
-                    Process Sale
-                  </Button>
-                  <Button variant="outline" className="w-full">
-                    <Printer className="mr-2 h-4 w-4" />
-                    Print Receipt
-                  </Button>
+                  ))}
                 </div>
               </CardContent>
             </Card>
-          )}
+          </div>
+
+          {/* Cart Section */}
+          <div className="space-y-6">
+            <Card className="border-green-200">
+              <CardHeader className="bg-green-50 border-b border-green-200">
+                <CardTitle className="flex items-center text-green-800">
+                  <ShoppingCart className="mr-2 h-5 w-5" />
+                  Shopping Cart ({cart.length})
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4">
+                <div className="space-y-3 max-h-64 overflow-y-auto">
+                  {cart.length === 0 ? (
+                    <p className="text-gray-500 text-center py-8">Cart is empty</p>
+                  ) : (
+                    cart.map((item) => (
+                      <div key={item.id} className="p-3 bg-green-50 rounded-lg border border-green-200">
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <h4 className="font-medium text-sm text-green-800">{item.name}</h4>
+                            <p className="text-xs text-gray-600">{item.category}</p>
+                            <p className="text-xs text-gray-500">
+                              {item.isWeightBased 
+                                ? `${item.weight?.toFixed(1)} kg`
+                                : `${item.quantity} ${item.unit}`
+                              }
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <div className="font-semibold text-green-600">${item.total.toFixed(2)}</div>
+                            <div className="flex items-center space-x-1 mt-1">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => updateQuantity(item.id, item.quantity - (item.isWeightBased ? 0.1 : 1))}
+                                className="h-6 w-6 p-0 border-green-300"
+                              >
+                                <Minus className="h-3 w-3" />
+                              </Button>
+                              <span className="text-xs px-2 font-medium">
+                                {item.isWeightBased ? item.weight?.toFixed(1) : item.quantity}
+                              </span>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => updateQuantity(item.id, item.quantity + (item.isWeightBased ? 0.1 : 1))}
+                                className="h-6 w-6 p-0 border-green-300"
+                              >
+                                <Plus className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {cart.length > 0 && (
+              <Card className="border-green-200">
+                <CardHeader className="bg-green-50 border-b border-green-200">
+                  <CardTitle className="text-green-800">Bill Summary</CardTitle>
+                </CardHeader>
+                <CardContent className="p-4">
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-sm">
+                      <span>Total Items:</span>
+                      <span>{cart.length}</span>
+                    </div>
+                    <div className="border-t border-green-200 pt-3">
+                      <div className="flex justify-between font-bold text-lg text-green-800">
+                        <span>Total:</span>
+                        <span>${getTotalAmount().toFixed(2)}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 space-y-3">
+                    <Button 
+                      className="w-full bg-green-500 hover:bg-green-600 text-white" 
+                      onClick={handleCheckout}
+                    >
+                      <ShoppingCart className="mr-2 h-4 w-4" />
+                      Process Sale
+                    </Button>
+                    <Button variant="outline" className="w-full border-green-200 text-green-700 hover:bg-green-50">
+                      <Printer className="mr-2 h-4 w-4" />
+                      Print Receipt
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </div>
       </div>
     </div>
