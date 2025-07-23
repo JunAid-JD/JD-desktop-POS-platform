@@ -236,265 +236,282 @@ export function StationeryPOS() {
   };
 
   return (
-    <div className="h-screen bg-gray-50 p-4">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-full">
-        {/* Left Panel - Items */}
-        <div className="lg:col-span-2 space-y-4">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center">
-                  <BookOpen className="mr-2 h-5 w-5" />
-                  Stationery Store POS
-                </CardTitle>
-                <div className="flex space-x-2">
-                  <Select value={customerType} onValueChange={(value: any) => setCustomerType(value)}>
-                    <SelectTrigger className="w-32">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="individual">Individual</SelectItem>
-                      <SelectItem value="school">School</SelectItem>
-                      <SelectItem value="bulk">Bulk</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Button
-                    variant={showSchoolItems ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setShowSchoolItems(!showSchoolItems)}
-                  >
-                    <GraduationCap className="mr-2 h-4 w-4" />
-                    School Items
-                  </Button>
-                </div>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-indigo-100 p-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="bg-white rounded-lg shadow-sm border border-indigo-200 p-6 mb-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center">
+                <BookOpen className="h-6 w-6 text-white" />
               </div>
-            </CardHeader>
-          </Card>
-
-          <Card className="flex-1">
-            <CardContent className="p-4">
-              <div className="flex space-x-4 mb-4">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input
-                    placeholder="Search stationery items..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="Category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map(category => (
-                      <SelectItem key={category} value={category}>
-                        {category === 'all' ? 'All Categories' : category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Select value={selectedGrade} onValueChange={setSelectedGrade}>
-                  <SelectTrigger className="w-32">
-                    <SelectValue placeholder="Grade" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {grades.map(grade => (
-                      <SelectItem key={grade} value={grade}>
-                        {grade === 'all' ? 'All Grades' : grade}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <div>
+                <h1 className="text-2xl font-bold text-indigo-800">Stationery Store POS</h1>
+                <p className="text-indigo-600">School & Office Supplies</p>
               </div>
-
-              <div className="space-y-3 max-h-96 overflow-y-auto">
-                {filteredItems.map((item) => (
-                  <div
-                    key={item.id}
-                    className="p-4 bg-white border rounded-lg hover:shadow-md transition-shadow"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2 mb-1">
-                          <h3 className="font-semibold">{item.name}</h3>
-                          <Badge variant="outline">{item.category}</Badge>
-                          {item.isSchoolItem && (
-                            <Badge className="bg-blue-100 text-blue-800">School</Badge>
-                          )}
-                          {item.season !== 'all' && (
-                            <Badge variant="secondary">{item.season}</Badge>
-                          )}
-                        </div>
-                        <p className="text-sm text-gray-600">{item.brand} • {item.description}</p>
-                        {item.grade && (
-                          <p className="text-xs text-gray-500 mt-1">{item.grade}</p>
-                        )}
-                        <div className="flex items-center space-x-4 mt-2">
-                          <div className="flex items-center space-x-2">
-                            <span className="font-bold text-lg">${item.price}</span>
-                            {item.bulkPrice && (
-                              <span className="text-sm text-gray-600">
-                                | Bulk: ${item.bulkPrice} ({item.bulkQuantity} pcs)
-                              </span>
-                            )}
-                          </div>
-                          <Badge variant={item.stock <= 20 ? 'destructive' : 'default'}>
-                            Stock: {item.stock}
-                          </Badge>
-                        </div>
-                      </div>
-                      <div className="flex flex-col space-y-2">
-                        <Button
-                          size="sm"
-                          onClick={() => addToCart(item, false)}
-                          disabled={item.stock <= 0}
-                        >
-                          <Plus className="mr-2 h-4 w-4" />
-                          Add Single
-                        </Button>
-                        {item.bulkPrice && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => addToCart(item, true)}
-                            disabled={item.stock < (item.bulkQuantity || 1)}
-                          >
-                            <Package className="mr-2 h-4 w-4" />
-                            Add Bulk
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+            <div className="flex space-x-3">
+              <Select value={customerType} onValueChange={(value: any) => setCustomerType(value)}>
+                <SelectTrigger className="w-32 border-indigo-200">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="individual">Individual</SelectItem>
+                  <SelectItem value="school">School</SelectItem>
+                  <SelectItem value="bulk">Bulk</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button
+                variant={showSchoolItems ? "default" : "outline"}
+                size="sm"
+                onClick={() => setShowSchoolItems(!showSchoolItems)}
+                className={showSchoolItems ? "bg-indigo-500 hover:bg-indigo-600" : "border-indigo-200"}
+              >
+                <GraduationCap className="mr-2 h-4 w-4" />
+                School Items
+              </Button>
+            </div>
+          </div>
         </div>
 
-        {/* Right Panel - Cart */}
-        <div className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <ShoppingCart className="mr-2 h-5 w-5" />
-                Cart ({cart.length})
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span>Customer Type:</span>
-                  <Badge variant="outline">{customerType}</Badge>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Products Section */}
+          <div className="lg:col-span-2">
+            <Card className="border-indigo-200">
+              <CardHeader className="bg-indigo-50 border-b border-indigo-200">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-indigo-800">Stationery Inventory</CardTitle>
+                  <Badge className="bg-indigo-100 text-indigo-800">
+                    {filteredItems.length} items
+                  </Badge>
                 </div>
-                {customerType === 'school' && (
-                  <div className="text-sm text-green-600">
-                    🎓 School discount: 10% off
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="flex space-x-4 mb-6">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Input
+                      placeholder="Search stationery items..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10 border-indigo-200"
+                    />
                   </div>
-                )}
-                {customerType === 'bulk' && getTotalAmount() > 500 && (
-                  <div className="text-sm text-green-600">
-                    📦 Bulk discount: 5% off
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                    <SelectTrigger className="w-40 border-indigo-200">
+                      <SelectValue placeholder="Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map(category => (
+                        <SelectItem key={category} value={category}>
+                          {category === 'all' ? 'All Categories' : category}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Select value={selectedGrade} onValueChange={setSelectedGrade}>
+                    <SelectTrigger className="w-32 border-indigo-200">
+                      <SelectValue placeholder="Grade" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {grades.map(grade => (
+                        <SelectItem key={grade} value={grade}>
+                          {grade === 'all' ? 'All Grades' : grade}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Order Items</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 max-h-64 overflow-y-auto">
-                {cart.length === 0 ? (
-                  <p className="text-gray-500 text-center py-8">Cart is empty</p>
-                ) : (
-                  cart.map((item) => {
-                    const cartKey = `${item.id}-${item.isBulk ? 'bulk' : 'single'}`;
-                    return (
-                      <div key={cartKey} className="p-2 bg-gray-50 rounded-lg">
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1">
-                            <h4 className="font-medium text-sm">{item.name}</h4>
-                            <p className="text-xs text-gray-600">
-                              {item.brand} • {item.isBulk ? 'Bulk Pack' : 'Single'}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              ${item.isBulk ? item.bulkPrice : item.price} each
-                            </p>
+                <div className="space-y-3 max-h-96 overflow-y-auto">
+                  {filteredItems.map((item) => (
+                    <div
+                      key={item.id}
+                      className="p-4 border border-indigo-200 rounded-lg hover:shadow-md transition-shadow bg-white"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-2 mb-1">
+                            <h3 className="font-semibold text-indigo-800">{item.name}</h3>
+                            <Badge variant="outline">{item.category}</Badge>
+                            {item.isSchoolItem && (
+                              <Badge className="bg-blue-100 text-blue-800">School</Badge>
+                            )}
+                            {item.season !== 'all' && (
+                              <Badge variant="secondary">{item.season}</Badge>
+                            )}
                           </div>
-                          <div className="text-right">
-                            <div className="font-semibold">${item.total}</div>
-                            <div className="flex items-center space-x-1 mt-1">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => updateQuantity(cartKey, item.quantity - (item.isBulk ? item.bulkQuantity || 1 : 1))}
-                                className="h-6 w-6 p-0"
-                              >
-                                <Minus className="h-3 w-3" />
-                              </Button>
-                              <span className="text-xs px-2">{item.quantity}</span>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => updateQuantity(cartKey, item.quantity + (item.isBulk ? item.bulkQuantity || 1 : 1))}
-                                className="h-6 w-6 p-0"
-                              >
-                                <Plus className="h-3 w-3" />
-                              </Button>
+                          <p className="text-sm text-gray-600">{item.brand} • {item.description}</p>
+                          {item.grade && (
+                            <p className="text-xs text-gray-500 mt-1">{item.grade}</p>
+                          )}
+                          <div className="flex items-center space-x-4 mt-2">
+                            <div className="flex items-center space-x-2">
+                              <span className="font-bold text-lg text-indigo-600">${item.price}</span>
+                              {item.bulkPrice && (
+                                <span className="text-sm text-gray-600">
+                                  | Bulk: ${item.bulkPrice} ({item.bulkQuantity} pcs)
+                                </span>
+                              )}
                             </div>
+                            <Badge variant={item.stock <= 20 ? 'destructive' : 'default'}>
+                              Stock: {item.stock}
+                            </Badge>
                           </div>
                         </div>
+                        <div className="flex flex-col space-y-2">
+                          <Button
+                            size="sm"
+                            onClick={() => addToCart(item, false)}
+                            disabled={item.stock <= 0}
+                            className="bg-indigo-500 hover:bg-indigo-600"
+                          >
+                            <Plus className="mr-2 h-4 w-4" />
+                            Add Single
+                          </Button>
+                          {item.bulkPrice && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => addToCart(item, true)}
+                              disabled={item.stock < (item.bulkQuantity || 1)}
+                              className="border-indigo-200"
+                            >
+                              <Package className="mr-2 h-4 w-4" />
+                              Add Bulk
+                            </Button>
+                          )}
+                        </div>
                       </div>
-                    );
-                  })
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          {cart.length > 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Bill Summary</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>Subtotal:</span>
-                    <span>${getTotalAmount().toFixed(2)}</span>
-                  </div>
-                  {getDiscountAmount() > 0 && (
-                    <div className="flex justify-between text-green-600">
-                      <span>Discount:</span>
-                      <span>-${getDiscountAmount().toFixed(2)}</span>
                     </div>
-                  )}
-                  <div className="border-t pt-2">
-                    <div className="flex justify-between font-bold text-lg">
-                      <span>Total:</span>
-                      <span>${(getTotalAmount() - getDiscountAmount()).toFixed(2)}</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="mt-4 space-y-2">
-                  <Button className="w-full" onClick={handleCheckout}>
-                    <ShoppingCart className="mr-2 h-4 w-4" />
-                    Process Sale
-                  </Button>
-                  <Button variant="outline" className="w-full">
-                    <Printer className="mr-2 h-4 w-4" />
-                    Print Receipt
-                  </Button>
+                  ))}
                 </div>
               </CardContent>
             </Card>
-          )}
+          </div>
+
+          {/* Cart Section */}
+          <div className="space-y-6">
+            <Card className="border-indigo-200">
+              <CardHeader className="bg-indigo-50 border-b border-indigo-200">
+                <CardTitle className="flex items-center text-indigo-800">
+                  <ShoppingCart className="mr-2 h-5 w-5" />
+                  Cart ({cart.length})
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span>Customer Type:</span>
+                    <Badge variant="outline">{customerType}</Badge>
+                  </div>
+                  {customerType === 'school' && (
+                    <div className="text-sm text-green-600">
+                      🎓 School discount: 10% off
+                    </div>
+                  )}
+                  {customerType === 'bulk' && getTotalAmount() > 500 && (
+                    <div className="text-sm text-green-600">
+                      📦 Bulk discount: 5% off
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-indigo-200">
+              <CardHeader className="bg-indigo-50 border-b border-indigo-200">
+                <CardTitle className="text-indigo-800">Order Items</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4">
+                <div className="space-y-2 max-h-64 overflow-y-auto">
+                  {cart.length === 0 ? (
+                    <p className="text-gray-500 text-center py-8">Cart is empty</p>
+                  ) : (
+                    cart.map((item) => {
+                      const cartKey = `${item.id}-${item.isBulk ? 'bulk' : 'single'}`;
+                      return (
+                        <div key={cartKey} className="p-2 bg-indigo-50 rounded-lg border border-indigo-200">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <h4 className="font-medium text-sm text-indigo-800">{item.name}</h4>
+                              <p className="text-xs text-gray-600">
+                                {item.brand} • {item.isBulk ? 'Bulk Pack' : 'Single'}
+                              </p>
+                              <p className="text-xs text-gray-500">
+                                ${item.isBulk ? item.bulkPrice : item.price} each
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <div className="font-semibold text-indigo-600">${item.total}</div>
+                              <div className="flex items-center space-x-1 mt-1">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => updateQuantity(cartKey, item.quantity - (item.isBulk ? item.bulkQuantity || 1 : 1))}
+                                  className="h-6 w-6 p-0 border-indigo-300"
+                                >
+                                  <Minus className="h-3 w-3" />
+                                </Button>
+                                <span className="text-xs px-2">{item.quantity}</span>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => updateQuantity(cartKey, item.quantity + (item.isBulk ? item.bulkQuantity || 1 : 1))}
+                                  className="h-6 w-6 p-0 border-indigo-300"
+                                >
+                                  <Plus className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {cart.length > 0 && (
+              <Card className="border-indigo-200">
+                <CardHeader className="bg-indigo-50 border-b border-indigo-200">
+                  <CardTitle className="text-lg text-indigo-800">Bill Summary</CardTitle>
+                </CardHeader>
+                <CardContent className="p-4">
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span>Subtotal:</span>
+                      <span>${getTotalAmount().toFixed(2)}</span>
+                    </div>
+                    {getDiscountAmount() > 0 && (
+                      <div className="flex justify-between text-green-600">
+                        <span>Discount:</span>
+                        <span>-${getDiscountAmount().toFixed(2)}</span>
+                      </div>
+                    )}
+                    <div className="border-t border-indigo-200 pt-2">
+                      <div className="flex justify-between font-bold text-lg text-indigo-800">
+                        <span>Total:</span>
+                        <span>${(getTotalAmount() - getDiscountAmount()).toFixed(2)}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 space-y-2">
+                    <Button className="w-full bg-indigo-500 hover:bg-indigo-600" onClick={handleCheckout}>
+                      <ShoppingCart className="mr-2 h-4 w-4" />
+                      Process Sale
+                    </Button>
+                    <Button variant="outline" className="w-full border-indigo-200 text-indigo-700 hover:bg-indigo-50">
+                      <Printer className="mr-2 h-4 w-4" />
+                      Print Receipt
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -92,10 +92,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const mockUser: User = {
         id: '1',
         email: userData.email,
-        businessName: '',
+        businessName: userData.businessName || '',
         ownerName: userData.name,
-        phone: '',
-        businessType: '',
+        phone: userData.phone || '',
+        businessType: userData.businessType || '',
         role: 'user',
         subscriptionStatus: 'pending',
         fbrEnabled: false,

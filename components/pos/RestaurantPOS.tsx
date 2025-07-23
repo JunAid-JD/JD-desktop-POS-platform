@@ -218,63 +218,83 @@ export function RestaurantPOS() {
   };
 
   return (
-    <div className="h-screen bg-gray-50 p-4">
-      <Tabs defaultValue="menu" className="h-full">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-bold flex items-center">
-              <ChefHat className="mr-2 h-6 w-6" />
-              Restaurant POS
-            </h1>
-            <TabsList>
-              <TabsTrigger value="menu">Menu</TabsTrigger>
-              <TabsTrigger value="tables">Tables</TabsTrigger>
-              <TabsTrigger value="orders">Orders</TabsTrigger>
-            </TabsList>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <div className="flex space-x-2">
-              <Button
-                variant={orderType === 'dine-in' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setOrderType('dine-in')}
-              >
-                <Users className="mr-2 h-4 w-4" />
-                Dine-In
-              </Button>
-              <Button
-                variant={orderType === 'takeaway' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setOrderType('takeaway')}
-              >
-                <Package className="mr-2 h-4 w-4" />
-                Takeaway
-              </Button>
-              <Button
-                variant={orderType === 'delivery' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setOrderType('delivery')}
-              >
-                <Car className="mr-2 h-4 w-4" />
-                Delivery
-              </Button>
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100 p-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="bg-white rounded-lg shadow-sm border border-orange-200 p-6 mb-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+                <ChefHat className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-orange-800">Restaurant POS</h1>
+                <p className="text-orange-600">Food & Beverage Management</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="flex space-x-2">
+                <Button
+                  variant={orderType === 'dine-in' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setOrderType('dine-in')}
+                  className={orderType === 'dine-in' ? "bg-orange-500 hover:bg-orange-600" : "border-orange-200"}
+                >
+                  <Users className="mr-2 h-4 w-4" />
+                  Dine-In
+                </Button>
+                <Button
+                  variant={orderType === 'takeaway' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setOrderType('takeaway')}
+                  className={orderType === 'takeaway' ? "bg-orange-500 hover:bg-orange-600" : "border-orange-200"}
+                >
+                  <Package className="mr-2 h-4 w-4" />
+                  Takeaway
+                </Button>
+                <Button
+                  variant={orderType === 'delivery' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setOrderType('delivery')}
+                  className={orderType === 'delivery' ? "bg-orange-500 hover:bg-orange-600" : "border-orange-200"}
+                >
+                  <Car className="mr-2 h-4 w-4" />
+                  Delivery
+                </Button>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-full">
-          <div className="lg:col-span-2">
-            <TabsContent value="menu" className="h-full">
-              <Card className="h-full">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle>Menu</CardTitle>
-                    <div className="flex space-x-2">
+        <Tabs defaultValue="menu" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="menu">Menu</TabsTrigger>
+            <TabsTrigger value="tables">Tables</TabsTrigger>
+            <TabsTrigger value="orders">Orders</TabsTrigger>
+          </TabsList>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <TabsContent value="menu">
+                <Card className="border-orange-200">
+                  <CardHeader className="bg-orange-50 border-b border-orange-200">
+                    <CardTitle className="text-orange-800">Menu</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="flex space-x-4 mb-6">
+                      <div className="relative flex-1">
+                        <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                        <Input
+                          placeholder="Search menu items..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="pl-10 border-orange-200"
+                        />
+                      </div>
                       <select
                         value={selectedCategory}
                         onChange={(e) => setSelectedCategory(e.target.value)}
-                        className="px-3 py-1 border rounded-md text-sm"
+                        className="px-3 py-2 border border-orange-200 rounded-md text-sm"
                       >
                         {categories.map(category => (
                           <option key={category} value={category}>
@@ -283,233 +303,222 @@ export function RestaurantPOS() {
                         ))}
                       </select>
                     </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="relative mb-4">
-                    <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input
-                      placeholder="Search menu items..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto">
-                    {filteredItems.map((item) => (
-                      <div
-                        key={item.id}
-                        className="p-4 bg-white border rounded-lg hover:shadow-md transition-shadow cursor-pointer"
-                        onClick={() => addToOrder(item)}
-                      >
-                        <div className="flex items-start space-x-3">
-                          <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
-                            {item.image ? (
-                              <img 
-                                src={item.image} 
-                                alt={item.name}
-                                className="w-full h-full object-cover rounded-lg"
-                              />
-                            ) : (
-                              <Package className="h-8 w-8 text-gray-400" />
-                            )}
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between">
-                              <h3 className="font-semibold">{item.name}</h3>
-                              <div className="flex items-center space-x-1">
-                                {item.isVeg && <Badge className="bg-green-100 text-green-800">Veg</Badge>}
-                                {item.isSpicy && <Badge className="bg-red-100 text-red-800">Spicy</Badge>}
-                              </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto">
+                      {filteredItems.map((item) => (
+                        <div
+                          key={item.id}
+                          className="p-4 border border-orange-200 rounded-lg hover:shadow-md transition-shadow cursor-pointer bg-white"
+                          onClick={() => addToOrder(item)}
+                        >
+                          <div className="flex items-start space-x-3">
+                            <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
+                              {item.image ? (
+                                <img 
+                                  src={item.image} 
+                                  alt={item.name}
+                                  className="w-full h-full object-cover rounded-lg"
+                                />
+                              ) : (
+                                <Package className="h-8 w-8 text-gray-400" />
+                              )}
                             </div>
-                            <p className="text-sm text-gray-600 mt-1">{item.description}</p>
-                            <div className="flex items-center justify-between mt-2">
-                              <span className="font-bold text-lg">${item.price}</span>
-                              <div className="flex items-center space-x-2">
-                                <Clock className="h-4 w-4 text-gray-400" />
-                                <span className="text-sm text-gray-600">{item.prepTime} min</span>
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between">
+                                <h3 className="font-semibold text-orange-800">{item.name}</h3>
+                                <div className="flex items-center space-x-1">
+                                  {item.isVeg && <Badge className="bg-green-100 text-green-800">Veg</Badge>}
+                                  {item.isSpicy && <Badge className="bg-red-100 text-red-800">Spicy</Badge>}
+                                </div>
+                              </div>
+                              <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                              <div className="flex items-center justify-between mt-2">
+                                <span className="font-bold text-lg text-orange-600">${item.price}</span>
+                                <div className="flex items-center space-x-2">
+                                  <Clock className="h-4 w-4 text-gray-400" />
+                                  <span className="text-sm text-gray-600">{item.prepTime} min</span>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="tables" className="h-full">
-              <Card className="h-full">
-                <CardHeader>
-                  <CardTitle>Table Management</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {tables.map((table) => (
-                      <div
-                        key={table.id}
-                        className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                          getTableStatusColor(table.status)
-                        } ${selectedTable?.id === table.id ? 'ring-2 ring-blue-500' : ''}`}
-                        onClick={() => selectTable(table)}
-                      >
-                        <div className="text-center">
-                          <div className="text-2xl font-bold">Table {table.number}</div>
-                          <div className="text-sm">Capacity: {table.capacity}</div>
-                          <div className="text-sm capitalize mt-1">{table.status}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="orders" className="h-full">
-              <Card className="h-full">
-                <CardHeader>
-                  <CardTitle>Active Orders</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {tables.filter(table => table.status === 'occupied' && table.currentOrder).map((table) => (
-                      <div key={table.id} className="p-4 bg-white border rounded-lg">
-                        <div className="flex items-center justify-between mb-2">
-                          <h3 className="font-semibold">Table {table.number}</h3>
-                          <Badge>In Progress</Badge>
-                        </div>
-                        <div className="space-y-1">
-                          {table.currentOrder?.map((item, index) => (
-                            <div key={index} className="flex justify-between text-sm">
-                              <span>{item.quantity}x {item.name}</span>
-                              <span>${item.total}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </div>
-
-          {/* Order Summary */}
-          <div className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <ShoppingCart className="mr-2 h-5 w-5" />
-                  Current Order
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span>Order Type:</span>
-                    <Badge variant="outline">{orderType}</Badge>
-                  </div>
-                  {selectedTable && (
-                    <div className="flex items-center justify-between text-sm">
-                      <span>Table:</span>
-                      <span>{selectedTable.number}</span>
+                      ))}
                     </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Order Items ({currentOrder.length})</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2 max-h-64 overflow-y-auto">
-                  {currentOrder.length === 0 ? (
-                    <p className="text-gray-500 text-center py-8">No items in order</p>
-                  ) : (
-                    currentOrder.map((item) => (
-                      <div key={item.id} className="p-2 bg-gray-50 rounded-lg">
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1">
-                            <h4 className="font-medium text-sm">{item.name}</h4>
-                            <p className="text-xs text-gray-600">{item.category}</p>
-                          </div>
-                          <div className="text-right">
-                            <div className="font-semibold">${item.total}</div>
-                            <div className="flex items-center space-x-1 mt-1">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                className="h-6 w-6 p-0"
-                              >
-                                <Minus className="h-3 w-3" />
-                              </Button>
-                              <span className="text-xs px-2">{item.quantity}</span>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                className="h-6 w-6 p-0"
-                              >
-                                <Plus className="h-3 w-3" />
-                              </Button>
-                            </div>
+              <TabsContent value="tables">
+                <Card className="border-orange-200">
+                  <CardHeader className="bg-orange-50 border-b border-orange-200">
+                    <CardTitle className="text-orange-800">Table Management</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {tables.map((table) => (
+                        <div
+                          key={table.id}
+                          className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                            getTableStatusColor(table.status)
+                          } ${selectedTable?.id === table.id ? 'ring-2 ring-orange-500' : ''}`}
+                          onClick={() => selectTable(table)}
+                        >
+                          <div className="text-center">
+                            <div className="text-2xl font-bold">Table {table.number}</div>
+                            <div className="text-sm">Capacity: {table.capacity}</div>
+                            <div className="text-sm capitalize mt-1">{table.status}</div>
                           </div>
                         </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
-            {currentOrder.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Order Summary</CardTitle>
+              <TabsContent value="orders">
+                <Card className="border-orange-200">
+                  <CardHeader className="bg-orange-50 border-b border-orange-200">
+                    <CardTitle className="text-orange-800">Active Orders</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      {tables.filter(table => table.status === 'occupied' && table.currentOrder).map((table) => (
+                        <div key={table.id} className="p-4 bg-white border border-orange-200 rounded-lg">
+                          <div className="flex items-center justify-between mb-2">
+                            <h3 className="font-semibold text-orange-800">Table {table.number}</h3>
+                            <Badge className="bg-orange-100 text-orange-800">In Progress</Badge>
+                          </div>
+                          <div className="space-y-1">
+                            {table.currentOrder?.map((item, index) => (
+                              <div key={index} className="flex justify-between text-sm">
+                                <span>{item.quantity}x {item.name}</span>
+                                <span>${item.total}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </div>
+
+            {/* Order Summary */}
+            <div className="space-y-6">
+              <Card className="border-orange-200">
+                <CardHeader className="bg-orange-50 border-b border-orange-200">
+                  <CardTitle className="flex items-center text-orange-800">
+                    <ShoppingCart className="mr-2 h-5 w-5" />
+                    Current Order
+                  </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-4">
                   <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span>Total Items:</span>
-                      <span>{currentOrder.reduce((total, item) => total + item.quantity, 0)}</span>
+                    <div className="flex items-center justify-between text-sm">
+                      <span>Order Type:</span>
+                      <Badge variant="outline">{orderType}</Badge>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Prep Time:</span>
-                      <span>{getTotalPrepTime()} min</span>
-                    </div>
-                    <div className="border-t pt-2">
-                      <div className="flex justify-between font-bold text-lg">
-                        <span>Total:</span>
-                        <span>${getTotalAmount()}</span>
+                    {selectedTable && (
+                      <div className="flex items-center justify-between text-sm">
+                        <span>Table:</span>
+                        <span>{selectedTable.number}</span>
                       </div>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 space-y-2">
-                    <Button 
-                      className="w-full" 
-                      onClick={handlePlaceOrder}
-                      disabled={orderType === 'dine-in' && !selectedTable}
-                    >
-                      <ChefHat className="mr-2 h-4 w-4" />
-                      Place Order
-                    </Button>
-                    <Button variant="outline" className="w-full">
-                      <Printer className="mr-2 h-4 w-4" />
-                      Print KOT
-                    </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>
-            )}
+
+              <Card className="border-orange-200">
+                <CardHeader className="bg-orange-50 border-b border-orange-200">
+                  <CardTitle className="text-orange-800">Order Items ({currentOrder.length})</CardTitle>
+                </CardHeader>
+                <CardContent className="p-4">
+                  <div className="space-y-2 max-h-64 overflow-y-auto">
+                    {currentOrder.length === 0 ? (
+                      <p className="text-gray-500 text-center py-8">No items in order</p>
+                    ) : (
+                      currentOrder.map((item) => (
+                        <div key={item.id} className="p-2 bg-orange-50 rounded-lg border border-orange-200">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <h4 className="font-medium text-sm text-orange-800">{item.name}</h4>
+                              <p className="text-xs text-gray-600">{item.category}</p>
+                            </div>
+                            <div className="text-right">
+                              <div className="font-semibold text-orange-600">${item.total}</div>
+                              <div className="flex items-center space-x-1 mt-1">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                  className="h-6 w-6 p-0 border-orange-300"
+                                >
+                                  <Minus className="h-3 w-3" />
+                                </Button>
+                                <span className="text-xs px-2">{item.quantity}</span>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                  className="h-6 w-6 p-0 border-orange-300"
+                                >
+                                  <Plus className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {currentOrder.length > 0 && (
+                <Card className="border-orange-200">
+                  <CardHeader className="bg-orange-50 border-b border-orange-200">
+                    <CardTitle className="text-lg text-orange-800">Order Summary</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span>Total Items:</span>
+                        <span>{currentOrder.reduce((total, item) => total + item.quantity, 0)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Prep Time:</span>
+                        <span>{getTotalPrepTime()} min</span>
+                      </div>
+                      <div className="border-t border-orange-200 pt-2">
+                        <div className="flex justify-between font-bold text-lg text-orange-800">
+                          <span>Total:</span>
+                          <span>${getTotalAmount()}</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 space-y-2">
+                      <Button 
+                        className="w-full bg-orange-500 hover:bg-orange-600" 
+                        onClick={handlePlaceOrder}
+                        disabled={orderType === 'dine-in' && !selectedTable}
+                      >
+                        <ChefHat className="mr-2 h-4 w-4" />
+                        Place Order
+                      </Button>
+                      <Button variant="outline" className="w-full border-orange-200 text-orange-700 hover:bg-orange-50">
+                        <Printer className="mr-2 h-4 w-4" />
+                        Print KOT
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </div>
-        </div>
-      </Tabs>
+        </Tabs>
+      </div>
     </div>
   );
 }

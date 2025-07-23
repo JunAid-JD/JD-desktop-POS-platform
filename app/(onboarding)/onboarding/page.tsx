@@ -70,7 +70,9 @@ export default function OnboardingPage() {
     } else {
       // Complete onboarding
       console.log('Onboarding completed:', data);
-      router.push('/dashboard');
+      // Update user data in context
+      // Redirect to specific POS based on business type
+      router.push(`/pos/${data.businessType}`);
     }
   };
 
